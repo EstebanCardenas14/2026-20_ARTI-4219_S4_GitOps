@@ -4,23 +4,21 @@ metadata:
   name: gitops-demo
   namespace: argocd
   finalizers:
-    # Limpia los recursos del clúster cuando se borra la Application
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    # REEMPLAZA con la URL de tu repositorio
-    repoURL: https://github.com/LauraCortes/crossplane_test
+    repoURL: https://github.com/EstebanCardenas14/2026-20_ARTI-4219_S4_GitOps
     targetRevision: main
-    path: 01-crossplane          # Directorio donde están los manifiestos
+    path: 01-crossplane
   destination:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
     automated:
-      prune: true       # Elimina recursos que se borraron de Git
-      selfHeal: true    # Revierte cambios manuales no autorizados
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
-      - SkipDryRunOnMissingResource=true   # Permite sync aunque haya CRDs aún no instalados
+      - SkipDryRunOnMissingResource=true
