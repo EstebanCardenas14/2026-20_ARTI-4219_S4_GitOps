@@ -6,6 +6,8 @@ apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
   name: xpostgresqlinstance-database
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
   labels:
     provider: postgresql
 spec:
