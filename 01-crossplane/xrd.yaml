@@ -12,20 +12,47 @@
 #   - Usar el grupo database.poc.io/v1alpha1
 # =====================================================================
 
-# apiVersion: apiextensions.crossplane.io/v1
-# kind: CompositeResourceDefinition
-# metadata:
-#   name: ...
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "1"
-# spec:
-#   group: ...
-#   names:
-#     kind: ...
-#   versions:
-#     - name: v1alpha1
-#       served: true
-#       referenceable: true
-#       schema:
-#         openAPIV3Schema:
-#           ...
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xpostgresqlinstances.database.poc.io
+spec:
+  scope: LegacyCluster
+  group: database.poc.io
+  names:
+    kind: XPostgreSQLInstance
+    plural: xpostgresqlinstances
+  claimNames:
+    kind: PostgreSQLInstance
+    plural: postgresqlinstances
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    dbName:
+                      type: string
+                      description: Nombre de la base de datos a crear.
+                      pattern: '^[a-z][a-z0-9_]{2,62}$'
+                    owner:
+                      type: string
+                      description: Rol de PostgreSQL propietario de la base de datos.
+                      default: platform
+                    connectionLimit:
+                      type: integer
+                      description: Conexiones concurrentes máximas. -1 significa sin límite.
+                      default: -1
+                      minimum: -1
+                  required:
+                    - dbName
+              required:
+                - parameters
