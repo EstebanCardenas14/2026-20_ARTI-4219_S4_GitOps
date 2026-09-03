@@ -2,14 +2,13 @@
 # Crossplane Claim — XPostgreSQLInstance
 # =====================================================================
 
-# apiVersion: ???
-# kind: ???
-# metadata:
-#   name: mi-base-de-datos
-#   namespace: default
-# annotations:
-#     argocd.argoproj.io/sync-wave: "3"
-# spec:
-#   parameters:
-#     dbName: ???
-#     owner: ???
+apiVersion: database.poc.io/v1alpha1
+kind: PostgreSQLInstance
+metadata:
+  name: app-demo-db
+  namespace: default
+spec:
+  parameters:
+    dbName: app_demo
+    owner: platform
+    connectionLimit: 20
