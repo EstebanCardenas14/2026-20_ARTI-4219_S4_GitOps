@@ -11,6 +11,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "4"
 spec:
   parameters:
-    dbName: app_demo
+    dbName: app_demo_v2
     owner: platform
     connectionLimit: 20
